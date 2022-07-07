@@ -12,6 +12,18 @@ DetalhesFilmes
 	<p>{{ object.descricao }}</p>
 	<img src="{{ object.thumb.url }}">
 
+	<h1>Episodios:</h1>
+	{% for episodio in object.episodios.all %}
+		<P>Episodio{{ forloop.counter }}: <a href="{{episodio.video}}">{{ episodio.titulo }}</a> </P>
+	{% endfor %}
+</div>
+<div class="py=10">
+	<h1>Relacionados</h1>
+	{% for filme in filmes_relacionados %}
+	<p>
+		<a href="{% url 'filme:detalhesfilme' filme.id %}">{{ filme.titulo }}</a>
+	</p>
+	{% endfor %}
 </div>
 
 {% endblock %}

@@ -17,6 +17,12 @@ class Detalhesfilme(DetailView):
     template_name = 'detalhesfilme.html'
     model = Filme
 
+    def get_context_data(self, **kwargs):
+        context = super(Detalhesfilme, self).get_context_data(**kwargs)
+        # filtrar a minha tabel de filmes pegando os filmes cuja a categoria é igual a categoria do filme da página (object)
+        filmes_relacionados = Filme.objects.filter(categoria=self.get_object().categoria)[0:5]
+        context["filmes_relacionados"] = filmes_relacionados
+        return context
 
 
 
