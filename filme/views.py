@@ -17,9 +17,16 @@ class Detalhesfilme(DetailView):
     template_name = 'detalhesfilme.html'
     model = Filme
 
+    def get(self, request, *args, **kwargs):
+        #contabilizar uma visualisação
+        filme = self.get_object()
+        filme.visualisacoes += 1
+        filme.save()
+        return super().get(request, *args, **kwargs) #redireciona o usuario para o url final
+
     def get_context_data(self, **kwargs):
         context = super(Detalhesfilme, self).get_context_data(**kwargs)
-        # filtrar a minha tabel de filmes pegando os filmes cuja a categoria é igual a categoria do filme da página (object)
+        # filtrar a minha tabela de filmes pegando os filmes cuja a categoria é igual a categoria do filme da página (object)
         filmes_relacionados = Filme.objects.filter(categoria=self.get_object().categoria)[0:5]
         context["filmes_relacionados"] = filmes_relacionados
         return context
@@ -27,6 +34,7 @@ class Detalhesfilme(DetailView):
 
 
 #Exemplo costruido com FBV - Functions Base Views
+
 #def homepage(request):
 #    return render(request, "homepage.html")
 
