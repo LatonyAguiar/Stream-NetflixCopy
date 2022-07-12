@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Filme
 from django.views.generic import TemplateView, ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,6 +9,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 #Costruido com CBV - Class Base Views
 class Homepage(TemplateView):
     template_name = 'homepage.html'
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:   #verificando se usuario esta autenticado
+            #redirecionando para a ho mefilmes
+            return redirect('filme:homefilmes')
+        else:
+            return super().get(request, *args, **kwargs)    #Redirecionando para o usuario final
 
 class Homefilmes(LoginRequiredMixin, ListView):
     template_name = 'homefilmes.html'
