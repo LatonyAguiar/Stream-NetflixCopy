@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Filme
 from django.views.generic import TemplateView, ListView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 #Para cada view que for criar, tem que criar os 3 itens-> View - URL - Template
@@ -9,11 +10,12 @@ from django.views.generic import TemplateView, ListView, DetailView
 class Homepage(TemplateView):
     template_name = 'homepage.html'
 
-class Homefilmes(ListView):
+class Homefilmes(LoginRequiredMixin, ListView):
     template_name = 'homefilmes.html'
     model = Filme
+    #object_list -> lista de itens do modelo
 
-class Detalhesfilme(DetailView):
+class Detalhesfilme(LoginRequiredMixin, DetailView):
     template_name = 'detalhesfilme.html'
     model = Filme
 
@@ -22,6 +24,8 @@ class Detalhesfilme(DetailView):
         filme = self.get_object()
         filme.visualisacoes += 1
         filme.save()
+        usuario = request.user
+        usuario.filmes_vistos.add(filme)
         return super().get(request, *args, **kwargs) #redireciona o usuario para o url final
 
     def get_context_data(self, **kwargs):
@@ -31,6 +35,18 @@ class Detalhesfilme(DetailView):
         context["filmes_relacionados"] = filmes_relacionados
         return context
 
+class Pesquisafilme(LoginRequiredMixin, ListView):
+    template_name = 'pesquisafilme.html'
+    model = Filme
+
+    #object_list
+    def get_queryset(self):
+        termo_pesquisa = self.request.GET.get('query')
+        if termo_pesquisa:
+            object_list = self.model.objects.filter(titulo__icontains=termo_pesquisa)
+            return object_list
+        else:
+            return None
 
 
 #Exemplo costruido com FBV - Functions Base Views
