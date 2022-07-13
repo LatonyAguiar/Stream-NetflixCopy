@@ -55,6 +55,12 @@ class Pesquisafilme(LoginRequiredMixin, ListView):
         else:
             return None
 
+class PaginaPerfil(LoginRequiredMixin, TemplateView):
+    template_name = 'editarperfil.html'
+
+
+class Criarconta(TemplateView):
+    template_name = 'criarconta.html'
 
 #Exemplo costruido com FBV - Functions Base Views
 

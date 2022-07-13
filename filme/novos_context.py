@@ -9,5 +9,5 @@ def lista_filmes_recentes(request):
     return {"lista_filmes_recentes":lista_filmes,"filme_destaque":filme_destaque}
 
 def lista_filmes_popular(request):
-    lista_filmes = Filme.objects.all().order_by('visualisacoes')[0:8]
+    lista_filmes = Filme.objects.all().order_by('-visualisacoes')[0:8]
     return {"lista_filmes_popular":lista_filmes}
