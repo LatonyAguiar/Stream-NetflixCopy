@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, reverse
-from .models import Filme
-from .forms import CriarContaForm
+from .models import Filme, Usuario
+from .forms import CriarContaForm, FormHomepage
 from django.views.generic import TemplateView, ListView, DetailView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -8,8 +8,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 #Para cada view que for criar, tem que criar os 3 itens-> View - URL - Template
 
 #Costruido com CBV - Class Base Views
-class Homepage(TemplateView):
+class Homepage(FormView):
     template_name = 'homepage.html'
+    form_class = FormHomepage
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:   #verificando se usuario esta autenticado
@@ -17,6 +18,14 @@ class Homepage(TemplateView):
             return redirect('filme:homefilmes')
         else:
             return super().get(request, *args, **kwargs)    #Redirecionando para o usuario final
+
+    def get_success_url(self):
+        email = self.request.POST.get('email')
+        usuarios = Usuario.objects.filter(email=email)
+        if usuarios:
+            return reverse('filme:login')
+        else:
+            return reverse('filme:criarconta')
 
 class Homefilmes(LoginRequiredMixin, ListView):
     template_name = 'homefilmes.html'
@@ -73,7 +82,7 @@ class Criarconta(FormView):
 
 #Exemplo costruido com FBV - Functions Base Views
 
-#def homepage(request):
+# def homepage(request):
 #    return render(request, "homepage.html")
 
 # def homefilmes(request):

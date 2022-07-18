@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'hashflix.urls'
+ROOT_URLCONF = 'tonyflix.urls'
 
 TEMPLATES = [
     {
@@ -72,7 +72,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'hashflix.wsgi.application'
+WSGI_APPLICATION = 'tonyflix.wsgi.application'
 
 
 # Database
@@ -142,4 +142,4 @@ LOGIN_URL = 'filme:login'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 
-CRISPY_TEMPLATE_PACKS = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
