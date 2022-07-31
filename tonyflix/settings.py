@@ -90,9 +90,9 @@ DATABASES = {
     }
 }
 
-import dj_database_url
+# import dj_database_url
 
-DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+# DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 
 # Password validation
@@ -156,9 +156,7 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'hpytzbbpz',
-    'API_KEY': '437189848814247',
-    'API_SECRET': 'SjIpc0UjAdEf6qEw3g4BbK08HSg'
+    
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
