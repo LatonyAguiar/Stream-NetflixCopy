@@ -1,1 +1,1 @@
-web: gunicorn tonyflix.wsgi--log-file -
+web: gunicorn tonyflix.wsgi --log-file -
